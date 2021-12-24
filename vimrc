@@ -18,10 +18,33 @@
 "
 "------------------------------------------------------------------------------
 
-"
+"--------Plug Manager--------{
+call plug#begin('~/.vim/plugged')
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+call plug#end()
+"}
+
+
+"--------Common Option--------{
+
+"enable vim feature (vi is nocompatible with vim)
+set nocompatible
+
+"enable mouse controler
+set mouse=a
+
+"type brackets etc. with highligh and jmp
+set showmatch
+set matchtime=3 "jmp time
+
+"show the below status
+set laststatus=2
+
+"back groud color
 set background=dark
 
-"enable the key of backspace
+"enable the keyboard of backspace
 set backspace=2
 
 "enable the number of line
@@ -45,13 +68,14 @@ else
   highlight LineNr ctermbg=black     guibg=black
 endif
 
+"show entire text in a line
 set nowrap
-
-"convert tab to space
-set expandtab
 
 "Numbers of space that <tab> look like
 set tabstop=8
+
+"convert tab to space
+set expandtab
 
 "Nnumbers of space that <tab> convert to, same with shiftwidth when value is negative
 set softtabstop=-1
@@ -59,9 +83,89 @@ set softtabstop=-1
 "Numbers of space that shift option using >> or <<
 set shiftwidth=4
 
-
+"delete swap file
 set noundofile
 set nobackup
 set noswapfile
 
+"syntax with highlight
 syntax on
+
+"search with hightlight
+set hlsearch
+set incsearch
+
+"set indent
+set autoindent
+
+"the max number of char, in a line, for automatic enter with space
+set textwidth=100
+
+"Unenable the automatic comment insertion in start of line
+set formatoptions-=r
+
+"personal leader
+let mapleader="-"
+let maplocalleader="-"
+
+"}
+
+
+"--------Common Mapping--------{
+
+"map key
+nnoremap <tab> :bn<cr>
+nnoremap <leader><tab> :bp<cr>
+
+inoremap <buffer> jk <esc>
+
+"}
+
+
+"--------Common Abbreviation--------{
+iabbr alwaysdef 
+\always@(posedge clk or negedge rst)<space>begin<cr>
+\<tab>if<space>(!rst)<space>begin<cr>
+\<tab>end<cr>
+\<tab>else begin<cr>
+\<tab>end<cr>
+\end
+"}
+
+
+"--------Auto Command--------{
+autocmd BufNewFile * :w
+
+augroup python_habit
+    autocmd!
+    autocmd FileType python  nnoremap <buffer> <localleader>c I#<esc>
+    autocmd FileType python  iabbrev <buffer> iff if:<left>
+"take place
+    autocmd FileType python  iabbr <buffer> absclassdef 
+\class(ABC):<cr>
+\<tab>''' '''<cr>
+\<tab>def<space>__init__(self, *args, **kvargs):<cr>
+\<tab><tab>pass
+
+autocmd FileType python  iabbr <buffer> classdef 
+\class:<cr><tab>''' '''<cr>
+\<tab>def<space>__init__(self, *args, **kvargs):<cr>
+\<tab><tab>pass
+
+augroup END
+
+autocmd FileType verilog nnoremap <buffer> <localleader>c I//<esc>
+
+
+augroup vim_habit
+    autocmd!
+    autocmd FileType vim set foldmarker={,}
+    autocmd FileType vim set foldmethod=marker
+augroup END
+
+
+"}
+
+
+
+    

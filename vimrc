@@ -123,6 +123,7 @@ inoremap <buffer> jk <esc>
 
 
 "--------Common Abbreviation--------{
+"zhuyuheng
 iabbr alwaysdef 
 \always@(posedge clk or negedge rst)<space>begin<cr>
 \<tab>if<space>(!rst)<space>begin<cr>

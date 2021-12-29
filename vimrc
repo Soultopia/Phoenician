@@ -41,7 +41,7 @@ set matchtime=3 "jmp time
 "show the below status
 set laststatus=2
 
-"back groud color
+"main tone of theme
 set background=dark
 
 "enable the keyboard of backspace
@@ -95,14 +95,29 @@ syntax on
 set hlsearch
 set incsearch
 
-"set indent
-set autoindent
+"auto indent with filetype
+filetype indent on
+
+"set indent mode
+set noautoindent
+set nocindent
+set nosmartindent
+set nosmarttab
 
 "the max number of char, in a line, for automatic enter with space
 set textwidth=100
 
 "Unenable the automatic comment insertion in start of line
 set formatoptions-=r
+
+"max of nested fold
+set foldlevel=1
+
+"enable auto fold
+set nofoldenable
+
+"view fold status
+"set foldcolumn=2
 
 "personal leader
 let mapleader="-"
@@ -123,50 +138,79 @@ inoremap <buffer> jk <esc>
 
 
 "--------Common Abbreviation--------{
-"zhuyuheng
-iabbr alwaysdef 
+iabbrev ( ()<left>
+
+
+"--------Auto Command--------{
+autocmd BufNewFile * :w
+
+
+
+
+"}
+
+
+"--------Python Auto Command{
+
+augroup python_habit
+autocmd!
+autocmd FileType python filetype indent off
+autocmd FileType python set indentexpr=""
+autocmd FileType python set autoindent
+autocmd FileType python set nocindent
+autocmd FileType python set nosmarttab
+autocmd FileType python set nosmartindent
+autocmd FileType python set foldenable
+autocmd FileType python set foldmethod=indent
+
+augroup END
+
+
+augroup python_habit
+
+autocmd FileType python  nnoremap <buffer> <localleader>c I#<esc>
+
+autocmd FileType python  iabbr <buffer> classdef 
+\class<space>Template(ABC):<cr>
+\<cr>
+\<tab>''' '''<cr>
+\<home><cr>
+\<tab>def __init__(self, *args, **kvargs):<cr>
+\<tab>super(Template, self).__init__(*args, **kvargs)<cr>
+\<tab>pass
+
+augroup END
+
+
+"}
+
+
+"--------SVerilog Auto Command{
+
+augroup sverilog_habit
+
+autocmd!
+autocmd FileType verilog nnoremap <buffer> <localleader>c I//<esc>
+autocmd FileType verilog iabbrev alwaysdef 
 \always@(posedge clk or negedge rst)<space>begin<cr>
 \<tab>if<space>(!rst)<space>begin<cr>
 \<tab>end<cr>
 \<tab>else begin<cr>
 \<tab>end<cr>
 \end
-"}
-
-
-"--------Auto Command--------{
-autocmd BufNewFile * :w
-
-augroup python_habit
-    autocmd!
-    autocmd FileType python  nnoremap <buffer> <localleader>c I#<esc>
-    autocmd FileType python  iabbrev <buffer> iff if:<left>
-"take place
-    autocmd FileType python  iabbr <buffer> absclassdef 
-\class(ABC):<cr>
-\<tab>''' '''<cr>
-\<tab>def<space>__init__(self, *args, **kvargs):<cr>
-\<tab><tab>pass
-
-autocmd FileType python  iabbr <buffer> classdef 
-\class:<cr><tab>''' '''<cr>
-\<tab>def<space>__init__(self, *args, **kvargs):<cr>
-\<tab><tab>pass
 
 augroup END
 
-autocmd FileType verilog nnoremap <buffer> <localleader>c I//<esc>
+"}
 
 
-augroup vim_habit
-    autocmd!
+
+"--------Vimscript Auto Command{
+
+augroup vimscript_habit
     autocmd FileType vim set foldmarker={,}
     autocmd FileType vim set foldmethod=marker
 augroup END
 
-
 "}
 
-
-
-    

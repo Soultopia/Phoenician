@@ -18,6 +18,7 @@
 "
 "------------------------------------------------------------------------------
 
+
 "--------Plug Manager--------{
 call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
@@ -83,10 +84,21 @@ set softtabstop=-1
 "Numbers of space that shift option using >> or <<
 set shiftwidth=4
 
-"delete swap file
-set noundofile
-set nobackup
-set noswapfile
+"generate persistence undo file in undodir
+set undofile
+set undodir=$HOME/.vim/tmp/undo
+
+"gen backup file in backupdir
+set backup
+set backupdir=$HOME/.vim/tmp/backup
+
+"gen swap file in directory
+set swapfile
+set directory=$HOME/.vim/tmp/swap
+
+"swap file refresh frequency
+set updatetime=40000 "time
+set updatecount=100  "char
 
 "syntax with highlight
 syntax on
@@ -138,12 +150,11 @@ inoremap <buffer> jk <esc>
 
 
 "--------Common Abbreviation--------{
-iabbrev ( ()<left>
+iabbrev ( ()<del><left>
 
 
 "--------Auto Command--------{
 autocmd BufNewFile * :w
-
 
 
 
@@ -174,10 +185,10 @@ autocmd FileType python  iabbr <buffer> classdef
 \class<space>Template(ABC):<cr>
 \<cr>
 \<tab>''' '''<cr>
-\<home><cr>
+\<cr>
 \<tab>def __init__(self, *args, **kvargs):<cr>
-\<tab>super(Template, self).__init__(*args, **kvargs)<cr>
-\<tab>pass
+\<tab><tab>super(Template, self).__init__(*args, **kvargs)<cr>
+\<tab><tab>pass
 
 augroup END
 
@@ -190,7 +201,7 @@ augroup END
 augroup sverilog_habit
 
 autocmd!
-autocmd FileType verilog nnoremap <buffer> <localleader>c I//<esc>
+autocmd FileType verilog nnoremap <leader>c I//<esc>
 autocmd FileType verilog iabbrev alwaysdef 
 \always@(posedge clk or negedge rst)<space>begin<cr>
 \<tab>if<space>(!rst)<space>begin<cr>
@@ -208,8 +219,12 @@ augroup END
 "--------Vimscript Auto Command{
 
 augroup vimscript_habit
-    autocmd FileType vim set foldmarker={,}
-    autocmd FileType vim set foldmethod=marker
+
+autocmd!
+autocmd FileType vim set formatoptions-=r
+autocmd FileType vim set foldmarker={,}
+autocmd FileType vim set foldmethod=marker
+
 augroup END
 
 "}

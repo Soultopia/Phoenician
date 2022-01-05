@@ -27,6 +27,26 @@ call plug#end()
 "}
 
 
+"--------Vim-airline--------{
+
+"enable view of top stateline
+let g:airline#extensions#tabline#enabled = 1
+
+"close the serial number show of buffer in top status bar
+let g:airline#extensions#tabline#buffer_nr_show = 0
+
+"close whitespace detect in the bottom status. (like trailing xxx)
+let g:airline#extensions#whitespace#enabled = 0
+
+"theme of both of top and bottom state bar
+let g:airline_theme = 'luna'
+
+"enable powerline fonts patcher for view of special char
+let g:airline_powerline_fonts = 1
+
+"}
+
+
 "--------Common Option--------{
 
 "enable vim feature (vi is nocompatible with vim)
@@ -39,7 +59,7 @@ set mouse=a
 set showmatch
 set matchtime=3 "jmp time
 
-"show the below status
+"enable the view of bottom status bar
 set laststatus=2
 
 "main tone of theme
@@ -58,12 +78,12 @@ set cursorcolumn
 
 "set the fg and bg color of line number
 if &background == "dark"
-  highlight LineNr       ctermfg=magenta     guifg=magenta 
+  highlight LineNr       ctermfg=magenta     guifg=magenta
   highlight LineNr       ctermbg=black       guibg=black
-  "highlight cursorline   ctermfg=black       guifg=magenta 
-  highlight cursorline   ctermbg=black    guifg=magenta 
-  "highlight cursorcolumn ctermfg=black       guifg=magenta 
-  highlight cursorcolumn ctermbg=black    guifg=magenta 
+  "highlight cursorline   ctermfg=black       guifg=magenta
+  highlight cursorline   ctermbg=black    guifg=magenta
+  "highlight cursorcolumn ctermfg=black       guifg=magenta
+  highlight cursorcolumn ctermbg=black    guifg=magenta
 else
   highlight LineNr ctermfg=magenta   guifg=magenta
   highlight LineNr ctermbg=black     guibg=black
@@ -122,13 +142,16 @@ set textwidth=100
 "Unenable the automatic comment insertion in start of line
 set formatoptions-=r
 
-"max of nested fold
-set foldlevel=1
-
 "enable auto fold
 set nofoldenable
 
-"view fold status
+"fold have six mothod. manual, indent, expr, syntax, diff and marker
+set foldmethod=indent
+
+"max of nested fold
+set foldlevel=2
+
+"view fold status in left
 "set foldcolumn=2
 
 "personal leader
@@ -146,11 +169,15 @@ nnoremap <leader><tab> :bp<cr>
 
 inoremap <buffer> jk <esc>
 
+"nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zo' : 'zc')<CR>
+
+
 "}
 
 
 "--------Common Abbreviation--------{
 iabbrev ( ()<del><left>
+"}
 
 
 "--------Auto Command--------{
@@ -166,6 +193,7 @@ autocmd BufNewFile * :w
 augroup python_habit
 autocmd!
 autocmd FileType python filetype indent off
+autocmd FileType python set formatoptions-=rc
 autocmd FileType python set indentexpr=""
 autocmd FileType python set autoindent
 autocmd FileType python set nocindent
@@ -181,7 +209,7 @@ augroup python_habit
 
 autocmd FileType python  nnoremap <buffer> <localleader>c I#<esc>
 
-autocmd FileType python  iabbr <buffer> classdef 
+autocmd FileType python  iabbr <buffer> classdef
 \class<space>Template(ABC):<cr>
 \<cr>
 \<tab>''' '''<cr>
@@ -202,7 +230,7 @@ augroup sverilog_habit
 
 autocmd!
 autocmd FileType verilog nnoremap <leader>c I//<esc>
-autocmd FileType verilog iabbrev alwaysdef 
+autocmd FileType verilog iabbrev alwaysdef
 \always@(posedge clk or negedge rst)<space>begin<cr>
 \<tab>if<space>(!rst)<space>begin<cr>
 \<tab>end<cr>
@@ -213,7 +241,6 @@ autocmd FileType verilog iabbrev alwaysdef
 augroup END
 
 "}
-
 
 
 "--------Vimscript Auto Command{

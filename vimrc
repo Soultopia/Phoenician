@@ -23,11 +23,12 @@
 call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'altercation/vim-colors-solarized'
 call plug#end()
 "}
 
 
-"--------Vim-airline--------{
+"--------Vim-airline-plug-config--------{
 
 "enable view of top stateline
 let g:airline#extensions#tabline#enabled = 1
@@ -35,11 +36,17 @@ let g:airline#extensions#tabline#enabled = 1
 "close the serial number show of buffer in top status bar
 let g:airline#extensions#tabline#buffer_nr_show = 0
 
-"close whitespace detect in the bottom status. (like trailing xxx)
+"close whitespace detect in the bottom status. (like trailing xxx with red color)
 let g:airline#extensions#whitespace#enabled = 0
 
 "theme of both of top and bottom state bar
-let g:airline_theme = 'luna'
+let g:airline_theme = 'solarized'
+let g:airline_solarized_normal_green = 1
+let g:airline_solarized_dark_inactive_background = 1
+let g:airline_solarized_dark_text = 1
+let g:airline_solarized_dark_inactive_border = 1
+let airline_solarized_enable_command_color = 1
+let g:solarized_base16 = 1
 
 "enable powerline fonts patcher for view of special char
 let g:airline_powerline_fonts = 1
@@ -47,7 +54,27 @@ let g:airline_powerline_fonts = 1
 "}
 
 
+"--------Solarized-theme-plug-config--------{
+let g:solarized_termtrans=1
+let g:solarized_degrade=1
+let g:solarized_bold=0
+let g:solarized_underline=0
+let g:solarized_italic=0
+let g:solarized_menu=1
+let g:solarized_contrast="low"
+let g:solarized_visibility="low"
+
+"termcolors cterm
+let g:solarized_termcolors=256
+colorscheme solarized
+"}
+
+
 "--------Common Option--------{
+
+"show invisible characters
+set nolist
+set listchars=tab:>.,trail:-
 
 "enable vim feature (vi is nocompatible with vim)
 set nocompatible
@@ -63,13 +90,16 @@ set matchtime=3 "jmp time
 set laststatus=2
 
 "main tone of theme
-set background=dark
+set background=light
 
 "enable the keyboard of backspace
 set backspace=2
 
 "enable the number of line
 set number
+
+"terminal support of color 256
+set t_Co=256
 
 "highlight the hor/ver curser
 set ruler
@@ -78,15 +108,21 @@ set cursorcolumn
 
 "set the fg and bg color of line number
 if &background == "dark"
-  highlight LineNr       ctermfg=magenta     guifg=magenta
-  highlight LineNr       ctermbg=black       guibg=black
-  "highlight cursorline   ctermfg=black       guifg=magenta
-  highlight cursorline   ctermbg=black    guifg=magenta
-  "highlight cursorcolumn ctermfg=black       guifg=magenta
-  highlight cursorcolumn ctermbg=black    guifg=magenta
+  highlight LineNr       ctermfg=241 guifg=LightRed 
+  highlight LineNr       ctermbg=234 guibg=Black 
+  highlight CursorLineNr cterm=bold  gui=bold 
+  highlight CursorLineNr ctermfg=230 guifg=LightRed 
+  highlight CursorLineNr ctermbg=235 guibg=LightRed 
+  highlight cursorline   ctermbg=234 guifg=magenta
+  highlight cursorcolumn ctermbg=234 guifg=magenta
 else
-  highlight LineNr ctermfg=magenta   guifg=magenta
-  highlight LineNr ctermbg=black     guibg=black
+  highlight LineNr       ctermfg=241 guifg=LightRed 
+  highlight LineNr       ctermbg=234 guibg=Black 
+  highlight CursorLineNr cterm=bold  gui=bold 
+  highlight CursorLineNr ctermfg=230 guifg=LightRed 
+  highlight CursorLineNr ctermbg=235 guibg=LightRed 
+  highlight cursorline   ctermbg=234 guifg=magenta
+  highlight cursorcolumn ctermbg=234 guifg=magenta
 endif
 
 "show entire text in a line
@@ -121,6 +157,7 @@ set updatetime=40000 "time
 set updatecount=100  "char
 
 "syntax with highlight
+syntax enable
 syntax on
 
 "search with hightlight
@@ -166,6 +203,8 @@ let maplocalleader="-"
 "map key
 nnoremap <tab> :bn<cr>
 nnoremap <leader><tab> :bp<cr>
+nnoremap <tab>t :tabbn<cr>
+nnoremap <leader><tab>t :tabbn<cr>
 
 inoremap <buffer> jk <esc>
 
@@ -191,15 +230,16 @@ autocmd BufNewFile * :w
 "--------Python Auto Command{
 
 augroup python_habit
+
 autocmd!
 autocmd FileType python filetype indent off
-autocmd FileType python set formatoptions-=rc
+autocmd FileType python set formatoptions-=r
 autocmd FileType python set indentexpr=""
 autocmd FileType python set autoindent
 autocmd FileType python set nocindent
 autocmd FileType python set nosmarttab
 autocmd FileType python set nosmartindent
-autocmd FileType python set foldenable
+autocmd FileType python set foldclose=all
 autocmd FileType python set foldmethod=indent
 
 augroup END
@@ -208,15 +248,16 @@ augroup END
 augroup python_habit
 
 autocmd FileType python  nnoremap <buffer> <localleader>c I#<esc>
-
-autocmd FileType python  iabbr <buffer> classdef
-\class<space>Template(ABC):<cr>
+autocmd FileType python  iabbr <buffer> classdef class Template(ABC):<cr>
 \<cr>
-\<tab>''' '''<cr>
+\<tab>''' Class Template for ... '''<cr>
 \<cr>
-\<tab>def __init__(self, *args, **kvargs):<cr>
-\<tab><tab>super(Template, self).__init__(*args, **kvargs)<cr>
-\<tab><tab>pass
+\def __init__(self, *args, **kvargs):<cr>
+\<tab>super(Template, self).__init__(*args, **kvargs)<cr>
+\pass<cr>
+\<left><left><left><left><cr>
+\def fun(self):<cr>
+\<tab>pass
 
 augroup END
 

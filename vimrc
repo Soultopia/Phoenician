@@ -48,97 +48,78 @@ let g:airline_solarized_dark_inactive_border = 1
 let airline_solarized_enable_command_color = 1
 let g:solarized_base16 = 1
 
-"enable powerline fonts patcher for view of special char
+"enable powerline fonts patcher for view of special char in state bar
 let g:airline_powerline_fonts = 1
 
 "}
 
 
 "--------Solarized-theme-plug-config--------{
-let g:solarized_termtrans=1
-let g:solarized_degrade=1
-let g:solarized_bold=0
-let g:solarized_underline=0
-let g:solarized_italic=0
+
+"view the emulator transparently background
+let g:solarized_termtrans=0
+
+"show special value with style as follows
+let g:solarized_bold=1
+let g:solarized_underline=1
+let g:solarized_italic=1
+
+"display solarized item in gvim menu
 let g:solarized_menu=1
-let g:solarized_contrast="low"
+
+"display with my favorite palette
+let g:solarized_contrast="high"
+
+"level of color depth about invisible char, tab etc.
 let g:solarized_visibility="low"
 
 "termcolors cterm
 let g:solarized_termcolors=256
+let g:solarized_degrade=1
+
 colorscheme solarized
+
 "}
 
 
 "--------Common Option--------{
 
-"show invisible characters
-set nolist
-set listchars=tab:>.,trail:-
+
+"----system before----{
 
 "enable vim feature (vi is nocompatible with vim)
 set nocompatible
 
-"enable mouse controler
-set mouse=a
+"terminal support of color 256
+set t_Co=256
 
-"type brackets etc. with highligh and jmp
-set showmatch
-set matchtime=3 "jmp time
+"main tone of theme
+set background=dark
 
 "enable the view of bottom status bar
 set laststatus=2
 
-"main tone of theme
-set background=light
+"syntax with highlight
+syntax enable "alias source $VIMRUNTIME/syntax/syntax.vim
 
-"enable the keyboard of backspace
-set backspace=2
+"enable overrule default setting
+syntax on
 
-"enable the number of line
-set number
+"Find table for multi-format read-in files
+set fileencodings=ucs-bom,ascii,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1 
 
-"terminal support of color 256
-set t_Co=256
+"if read file is different from internal encoding, the file will be encoded and converted to internal encoding. 
+"And fileencoding will be setted to read file coding, the internal buffer will be converted to fileencoding when writing. 
+"set fileencoding=utf-8
 
-"highlight the hor/ver curser
-set ruler
-set cursorline
-set cursorcolumn
+"vim internal encoding like buffer etc. (important)
+set encoding=utf-8
 
-"set the fg and bg color of line number
-if &background == "dark"
-  highlight LineNr       ctermfg=241 guifg=LightRed 
-  highlight LineNr       ctermbg=234 guibg=Black 
-  highlight CursorLineNr cterm=bold  gui=bold 
-  highlight CursorLineNr ctermfg=230 guifg=LightRed 
-  highlight CursorLineNr ctermbg=235 guibg=LightRed 
-  highlight cursorline   ctermbg=234 guifg=magenta
-  highlight cursorcolumn ctermbg=234 guifg=magenta
-else
-  highlight LineNr       ctermfg=241 guifg=LightRed 
-  highlight LineNr       ctermbg=234 guibg=Black 
-  highlight CursorLineNr cterm=bold  gui=bold 
-  highlight CursorLineNr ctermfg=230 guifg=LightRed 
-  highlight CursorLineNr ctermbg=235 guibg=LightRed 
-  highlight cursorline   ctermbg=234 guifg=magenta
-  highlight cursorcolumn ctermbg=234 guifg=magenta
-endif
+"term display encoding
+set termencoding=utf-8
 
-"show entire text in a line
-set nowrap
-
-"Numbers of space that <tab> look like
-set tabstop=8
-
-"convert tab to space
-set expandtab
-
-"Nnumbers of space that <tab> convert to, same with shiftwidth when value is negative
-set softtabstop=-1
-
-"Numbers of space that shift option using >> or <<
-set shiftwidth=4
+"vimscript encoding
+scriptencoding utf-8
 
 "generate persistence undo file in undodir
 set undofile
@@ -156,13 +137,50 @@ set directory=$HOME/.vim/tmp/swap
 set updatetime=40000 "time
 set updatecount=100  "char
 
-"syntax with highlight
-syntax enable
-syntax on
+"}
 
-"search with hightlight
-set hlsearch
-set incsearch
+
+"----Text-after----{
+
+"show invisible characters
+set nolist
+"set listchars=tab:>.,trail:-
+
+"type brackets etc. with highligh and jmp
+set showmatch
+set matchtime=3 "jmp time
+
+"enable the keyboard of backspace
+set backspace=2
+
+"enable the number of line
+set number
+
+"show entire text in a line
+set nowrap
+
+"Numbers of space that <tab> look like
+set tabstop=8
+
+"convert tab to space
+set expandtab
+
+"Nnumbers of space that <tab> convert to, same with shiftwidth when value is negative
+set softtabstop=-1
+
+"Numbers of space that shift option using >> or <<
+set shiftwidth=4
+
+"the max number of char, in a line, for automatic enter with space
+set textwidth=100
+
+"Unenable the automatic comment insertion in start of line
+set formatoptions-=r
+
+"}
+
+
+"----Indent and fold----{
 
 "auto indent with filetype
 filetype indent on
@@ -172,12 +190,6 @@ set noautoindent
 set nocindent
 set nosmartindent
 set nosmarttab
-
-"the max number of char, in a line, for automatic enter with space
-set textwidth=100
-
-"Unenable the automatic comment insertion in start of line
-set formatoptions-=r
 
 "enable auto fold
 set nofoldenable
@@ -189,12 +201,90 @@ set foldmethod=indent
 set foldlevel=2
 
 "view fold status in left
-"set foldcolumn=2
+set foldcolumn=3
+
+"}
+
+
+"----Hightlight----{
+
+"highlight the hor/ver curser
+set ruler
+set cursorline
+set cursorcolumn
+
+"set the fg and bg color of line number
+if &background == "dark"
+  autocmd FileType * highlight LineNr       ctermfg=241
+  autocmd FileType * highlight LineNr       ctermbg=235
+  autocmd FileType * highlight CursorLineNr cterm=bold
+  autocmd FileType * highlight CursorLineNr ctermfg=230
+  autocmd FileType * highlight CursorLineNr ctermbg=235  
+  autocmd FileType * highlight cursorline   ctermbg=235
+  autocmd FileType * highlight cursorcolumn ctermbg=235
+else
+  autocmd FileType * highlight CursorLineNr cterm=bold
+  autocmd FileType * highlight CursorLineNr ctermfg=black
+endif
+
+"search with hightlight
+set hlsearch
+set incsearch
+
+"}
+
+
+"scrolling when 2 lines away from the edge
+set scrolloff=2
 
 "personal leader
 let mapleader="-"
 let maplocalleader="-"
 
+"}
+
+
+"--------GUI-Setting--------{
+
+"enable mouse controler
+set mouse=a
+
+if has("win32")
+  set guifont=Consolas-with-Yahei:h12:cANSI:qDRAFT
+  "set guifont=Powerline_Consolas:h12:cANSI:qDRAFT
+else
+  "set guifont=Consolas-with-Yahei\ 12
+  set guifont=Monospace\ 12
+  "set guifont=Powerline\ Consolas\ 12
+endif
+
+"no gui scroll bar
+set guioptions-=l
+set guioptions-=L
+set guioptions-=r
+set guioptions-=R
+
+"no gui memu
+"set guioptions-=m
+"set guioptions-=T
+
+"set the fg and bg color of line number
+if &background == "dark"
+  autocmd GUIEnter * highlight LineNr       guifg=gray 
+  autocmd GUIEnter * highlight LineNr       guibg=Black 
+  autocmd GUIEnter * highlight CursorLineNr gui=bold 
+  autocmd GUIEnter * highlight CursorLineNr guifg=white 
+else
+  autocmd GUIEnter * highlight CursorLineNr gui=bold 
+  autocmd GUIEnter * highlight CursorLineNr guifg=Black
+endif
+
+"gui menu language
+set langmenu=en_US
+let $LANG='en_US'
+language messages en_US
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
 "}
 
 

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+su root
 cp -rf ../fonts /usr/share/fonts/vim-fonts
 cd /usr/share/fonts/vim-fonts
 mkfontscale

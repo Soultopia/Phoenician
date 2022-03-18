@@ -5,12 +5,22 @@ alias cd='mycd(){ cd $1&&ll --color -F; };mycd'
 alias sb='source ~/.bashrc'
 
 alias v='vim'
+alias g='gvim'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
-alias cdp='cd /common/$(whoami)'
+alias vclean='
+rm -rf ~/.vim/tmp/backup/* && \
+rm -rf ~/.vim/tmp/swap/*   && \
+rm -rf ~/.vim/tmp/undo/*   && \
+echo "
+*****************************************************
+**** Clean vim swap, undo and backup file done ~ ****
+*****************************************************
+"'
 
+alias cdp='cd /common/$(whoami)'
 
 export TERM=xterm-256color
 

@@ -19,16 +19,20 @@
 "------------------------------------------------------------------------------
 
 
-"--------Plug Manager--------{
+"--------Plug Manager--------{{{
 call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+"Plug 'tpope/vim-capslock'
 Plug 'altercation/vim-colors-solarized'
+Plug 'vhda/verilog_systemverilog.vim'
+Plug 'Yggdroot/LeaderF'
+Plug 'vim-scripts/matchit.zip'
 call plug#end()
-"}
+"}}}
 
 
-"--------Vim-airline-plug-config--------{
+"--------Vim-airline-plug-config--------{{{
 
 "enable view of top stateline
 let g:airline#extensions#tabline#enabled = 1
@@ -45,16 +49,27 @@ let g:airline_solarized_normal_green = 1
 let g:airline_solarized_dark_inactive_background = 1
 let g:airline_solarized_dark_text = 1
 let g:airline_solarized_dark_inactive_border = 1
-let airline_solarized_enable_command_color = 1
 let g:solarized_base16 = 1
+let airline_solarized_enable_command_color = 1
 
 "enable powerline fonts patcher for view of special char in state bar
 let g:airline_powerline_fonts = 1
 
-"}
+"capslock with software
+let g:airline#extensions#capslock#enabled = 1
+let g:airline#extensions#capslock#symbol = 'C'
+
+"nmap gc <Plug>CapsLockToggle
+nmap <C-L> <Plug>CapsLockToggle
+imap <C-L> <Plug>CapsLockToggle
+cmap <C-L> <Plug>CapsLockToggle
+vmap <C-L> <Plug>CapsLockToggle
 
 
-"--------Solarized-theme-plug-config--------{
+"}}}
+
+
+"--------Solarized-theme-plug-config--------{{{
 
 "view the emulator transparently background
 let g:solarized_termtrans=0
@@ -79,13 +94,57 @@ let g:solarized_degrade=1
 
 colorscheme solarized
 
-"}
+"}}}
 
 
-"--------Common Option--------{
+"--------SVerilog-plug-config--------{{{
+
+let g:verilog_efm_uvm_lst = "all"
+let g:verilog_efm_uvm_lst = "fatal,error,warning"
+
+"}}}
 
 
-"----system before----{
+"--------Matchit-plug-config--------{{{
+if exists('loaded_matchit')
+    let b:match_ignorecase=0
+
+    "----system-verilog----{{{
+    autocmd FileType vim let b:match_words=
+    \ '\<if\>:\<endif\>,' .
+    "}}}
+
+    "----system-verilog----{{{
+    autocmd FileType verilog_systemverilog let b:match_words=
+    \ '\<begin\>:\<end\>,' .
+    \ '\<if\>:\<else\>,' .
+    \ '\<class\>:\<endclass\>',
+    \ '\<module\>:\<endmodule\>',
+    \ '\<program\>:\<endprogram\>',
+    \ '\<clocking\>:\<endclocking\>',
+    \ '\<property\>:\<endpropperty\>',
+    \ '\<sequence\>:\<endpropperty\>',
+    \ '\<primitive\>:\<endpropperty\>',
+    \ '\<covergroup\>:\<endpropperty\>',
+    \ '\<package\>:\<endpropperty\>',
+    \ '\<generate\>:\<endpropperty\>',
+    \ '\<interface\>:\<endpropperty\>',
+    \ '\<function\>:\<endpropperty\>',
+    \ '\<task\>:\<endpropperty\>',
+    \ '\<fork\>:\<join\>|\<join_any\>|\<join_none\>',
+    \ '\<case\>|\<casex\>|\<casez\>:\<endpropperty\>',
+    \ '`ifdef\>:`else\>:`endif\>',
+    \ '`ifndef\>:`else\>:`endif\>',
+    "}}}
+
+endif
+"}}}
+
+
+"--------Common Option--------{{{
+
+
+"----system before----{{{
 
 "enable vim feature (vi is nocompatible with vim)
 set nocompatible
@@ -137,14 +196,18 @@ set directory=$HOME/.vim/tmp/swap
 set updatetime=40000 "time
 set updatecount=100  "char
 
-"}
+"command line automatic completion and view in sttatusline
+set wildmenu
+
+"}}}
 
 
-"----Text-after----{
+"----Text-after----{{{
 
 "show invisible characters
+set listchars+=tab:>-
 set nolist
-"set listchars=tab:>.,trail:-
+
 
 "type brackets etc. with highligh and jmp
 set showmatch
@@ -177,19 +240,19 @@ set textwidth=100
 "Unenable the automatic comment insertion in start of line
 set formatoptions-=r
 
-"}
+"}}}
 
 
-"----Indent and fold----{
+"----Indent and fold----{{{
 
-"auto indent with filetype
-filetype indent on
+"auto dectect, plugin and indent with filetype
+filetype plugin indent on
 
 "set indent mode
 set noautoindent
 set nocindent
 set nosmartindent
-set nosmarttab
+set smarttab
 
 "enable auto fold
 set nofoldenable
@@ -203,10 +266,10 @@ set foldlevel=2
 "view fold status in left
 set foldcolumn=3
 
-"}
+"}}}
 
 
-"----Hightlight----{
+"----Hightlight----{{{
 
 "highlight the hor/ver curser
 set ruler
@@ -231,7 +294,7 @@ endif
 set hlsearch
 set incsearch
 
-"}
+"}}}
 
 
 "scrolling when 2 lines away from the edge
@@ -241,21 +304,22 @@ set scrolloff=2
 let mapleader="-"
 let maplocalleader="-"
 
-"}
+"}}}
 
 
-"--------GUI-Setting--------{
+"--------GUI-Setting--------{{{
 
 "enable mouse controler
 set mouse=a
 
 if has("win32")
-  set guifont=Consolas-with-Yahei:h12:cANSI:qDRAFT
   "set guifont=Powerline_Consolas:h12:cANSI:qDRAFT
+  set guifont=Consolas-with-Yahei:h12:cANSI:qDRAFT
 else
-  "set guifont=Consolas-with-Yahei\ 12
-  set guifont=Monospace\ 12
-  "set guifont=Powerline\ Consolas\ 12
+  "set guifont=Consolas-with-Yahei\ 13
+  "set guifont=Monospace\ 13
+  "set guifont=Powerline\ Consolas\ 13
+  set guifont=Consolas-with-Yahei\ 13
 endif
 
 "no gui scroll bar
@@ -285,10 +349,10 @@ let $LANG='en_US'
 language messages en_US
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
-"}
+"}}}
 
 
-"--------Common Mapping--------{
+"--------Common Mapping--------{{{
 
 "map key
 nnoremap <tab> :bn<cr>
@@ -301,23 +365,23 @@ inoremap <buffer> jk <esc>
 "nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zo' : 'zc')<CR>
 
 
-"}
+"}}}
 
 
-"--------Common Abbreviation--------{
-iabbrev ( ()<del><left>
-"}
+"--------Common Abbreviation--------{{{
+"iabbrev ( ()<del><left>
+"}}}
 
 
-"--------Auto Command--------{
+"--------Auto Command--------{{{
 autocmd BufNewFile * :w
 
 
 
-"}
+"}}}
 
 
-"--------Python Auto Command{
+"--------Python Auto Command--------{{{
 
 augroup python_habit
 
@@ -338,52 +402,88 @@ augroup END
 augroup python_habit
 
 autocmd FileType python  nnoremap <buffer> <localleader>c I#<esc>
-autocmd FileType python  iabbr <buffer> classdef class Template(ABC):<cr>
-\<cr>
-\<tab>''' Class Template for ... '''<cr>
-\<cr>
-\def __init__(self, *args, **kvargs):<cr>
-\<tab>super(Template, self).__init__(*args, **kvargs)<cr>
-\pass<cr>
-\<left><left><left><left><cr>
-\def fun(self):<cr>
-\<tab>pass
+autocmd FileType python  iabbr <buffer> classdef 
+    \class Template(ABC):<cr>
+    \<cr>
+    \<tab>''' Class Template for ... '''<cr>
+    \<cr>
+    \def __init__(self, *args, **kvargs):<cr>
+    \<tab>super(Template, self).__init__(*args, **kvargs)<cr>
+    \pass<cr>
+    \<left><left><left><left><cr>
+    \def main(self):<cr>
+    \<tab>pass
 
 augroup END
 
 
-"}
+"}}}
 
 
-"--------SVerilog Auto Command{
-
-augroup sverilog_habit
-
-autocmd!
-autocmd FileType verilog nnoremap <leader>c I//<esc>
-autocmd FileType verilog iabbrev alwaysdef
-\always@(posedge clk or negedge rst)<space>begin<cr>
-\<tab>if<space>(!rst)<space>begin<cr>
-\<tab>end<cr>
-\<tab>else begin<cr>
-\<tab>end<cr>
-\end
-
-augroup END
-
-"}
-
-
-"--------Vimscript Auto Command{
+"--------Vimscript Auto Command--------{{{
 
 augroup vimscript_habit
 
 autocmd!
 autocmd FileType vim set formatoptions-=r
-autocmd FileType vim set foldmarker={,}
+"autocmd FileType vim set foldmarker={,}
 autocmd FileType vim set foldmethod=marker
 
 augroup END
 
-"}
+"}}}
+
+
+"--------Makefile Auto Command--------{{{
+
+augroup makefile_habit
+
+autocmd!
+autocmd FileType make set listchars=tab:>-
+autocmd FileType make set list
+autocmd FileType make set formatoptions-=r
+autocmd FileType make set foldmethod=marker
+
+augroup END
+
+"}}}
+
+
+"--------SVerilog Auto Command--------{{{
+
+augroup sverilog_habit
+
+autocmd!
+autocmd FileType verilog_systemverilog set foldmethod=syntax
+autocmd FileType verilog_systemverilog nnoremap <leader>c I//<esc>
+autocmd FileType verilog_systemverilog iabbrev alwaysdef 
+    \always@(posedge clk or negedge rst) begin<cr>
+    \if<space>(!rst)<space>begin<cr>
+    \<cr>
+    \end<cr>
+    \else begin<cr>
+    \<cr>
+    \end<cr>
+    \end
+
+augroup END
+
+"}}}
+
+
+"--------Bash Auto Command--------{{{
+
+augroup bash_habit
+
+autocmd!
+autocmd FileType sh set formatoptions-=r
+autocmd FileType sh set foldmethod=marker
+autocmd FileType sh noremap <leader>$ bi${<esc>wwi}<esc>
+
+augroup END
+
+"}}}
+
+"autocmd InsertCharPre * let v:char = v:char ==# tolower(v:char) ? toupper(v:char) : tolower(v:char)
+
 

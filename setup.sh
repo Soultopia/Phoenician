@@ -32,3 +32,10 @@ else
     echo "Seted up bashrc yet"
 fi
 
+sudo cp -rf ./vim/fonts /usr/share/fonts/vim-fonts
+cd /usr/share/fonts/vim-fonts
+sudo mkfontscale
+sudo mkfontdir
+sudo fc-cache
+sudo fc-list
+cd -

@@ -487,3 +487,13 @@ augroup END
 "autocmd InsertCharPre * let v:char = v:char ==# tolower(v:char) ? toupper(v:char) : tolower(v:char)
 
 
+
+augroup!
+
+autocmd FileType v set filetype=verilog_systemverilog
+autocmd FileType sv set filetype=verilog_systemverilog
+
+augroup END
+
+
+

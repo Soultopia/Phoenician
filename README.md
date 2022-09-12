@@ -63,4 +63,4 @@ the current server and support the Plug-in (airline) display with utf-8 patch ch
 
 3. Install
 
-Run :PlugStatus display the status of Plug-in units and :PlugInstall to install Plug-in units with git on the vimrc.
+Open vim and Run :PlugStatus display the status of Plug-in units, and :PlugInstall to install Plug-in units with git on the vimrc.

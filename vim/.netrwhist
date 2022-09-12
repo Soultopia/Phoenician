@@ -1,3 +1,10 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
-let g:netrw_dirhist_1='/usr/share/fonts/vim-fonts'
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/common/zhuyuheng/github/Heimdallr/env/test_unit/src'
+let g:netrw_dirhist_2='/common/zhuyuheng/github/Adaptools/pslpkg/common'
+let g:netrw_dirhist_3='/common/zhuyuheng/github/OOPAtom_bk/src'
+let g:netrw_dirhist_4='/common/zhuyuheng/github/OOPAtom_bk/metaclass'
+let g:netrw_dirhist_5='/common/zhuyuheng/github/Heimdallr/PRJ/verif/profile/tools.sh'
+let g:netrw_dirhist_6='/common/zhuyuheng/github/Heimdallr/PRJ/verif'
+let g:netrw_dirhist_7='/common/zhuyuheng/github/Heimdallr/PRJ/verif/envir/ut/Heimdallr_bk/cfg'
+let g:netrw_dirhist_8='/common/zhuyuheng/github/Heimdallr/PRJ/verif'

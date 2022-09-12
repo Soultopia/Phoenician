@@ -211,7 +211,7 @@ set nolist
 
 "type brackets etc. with highligh and jmp
 set showmatch
-set matchtime=3 "jmp time
+set matchtime=3 "match flesh time (s)
 
 "enable the keyboard of backspace
 set backspace=2
@@ -364,6 +364,8 @@ inoremap <buffer> jk <esc>
 
 "nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zo' : 'zc')<CR>
 
+nnoremap () hf{v%:s/{\(.*\)}/(\1)/g<cr>:noh<cr>
+nnoremap {} hf(v%:s/(\(.*\))/{\1}/g<cr>:noh<cr>
 
 "}}}
 

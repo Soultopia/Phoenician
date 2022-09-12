@@ -32,3 +32,8 @@ else
     echo "Seted up bashrc yet"
 fi
 
+mkdir vim/plugged
+mkdir vim/tmp
+mkdir vim/tmp/backup
+mkdir vim/tmp/swap
+mkdir vim/tmp/undo

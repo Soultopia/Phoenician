@@ -488,12 +488,12 @@ augroup END
 
 
 
-augroup!
+"augroup!
 
-autocmd FileType v set filetype=verilog_systemverilog
-autocmd FileType sv set filetype=verilog_systemverilog
+"autocmd FileType v set filetype=verilog_systemverilog
+"autocmd FileType sv set filetype=verilog_systemverilog
 
-augroup END
+"augroup END
 
 
 

@@ -27,7 +27,16 @@ Plug 'tpope/vim-capslock'
 Plug 'altercation/vim-colors-solarized'
 Plug 'vhda/verilog_systemverilog.vim'
 Plug 'Yggdroot/LeaderF'
+Plug 'preservim/nerdtree'
+Plug 'preservim/tagbar'
 Plug 'vim-scripts/matchit.zip'
+Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/fzf.vim'
+Plug 'ycm-core/YouCompleteMe'
+Plug 'HonkW93/automatic-verilog'
+Plug 'dense-analysis/ale'
+Plug 'morhetz/gruvbox'
+Plug 'kien/rainbow_parentheses.vim'
 call plug#end()
 "}}}
 
@@ -44,7 +53,8 @@ let g:airline#extensions#tabline#buffer_nr_show = 0
 let g:airline#extensions#whitespace#enabled = 0
 
 "theme of both of top and bottom state bar
-let g:airline_theme = 'solarized'
+let g:airline_theme = 'gruvbox'
+"let g:airline_theme = 'solarized'
 let g:airline_solarized_normal_green = 1
 let g:airline_solarized_dark_inactive_background = 1
 let g:airline_solarized_dark_text = 1
@@ -92,7 +102,8 @@ let g:solarized_visibility="low"
 let g:solarized_termcolors=256
 let g:solarized_degrade=1
 
-colorscheme solarized
+"colorscheme solarized
+colorscheme gruvbox
 
 "}}}
 
@@ -312,14 +323,18 @@ let maplocalleader="-"
 "enable mouse controler
 set mouse=a
 
-if has("win32")
-  "set guifont=Powerline_Consolas:h12:cANSI:qDRAFT
+"fonts setting
+if has('win32') || has('win64')
   set guifont=Consolas-with-Yahei:h12:cANSI:qDRAFT
+  "set guifont=Powerline_Consolas:h12:cANSI:qDRAFT
+elseif has('unix') || has('mac')
+  set guifont=Consolas-with-Yahei:h18
+  "set guifont=Consolas-with-Yahei:h14
 else
+  set guifont=Consolas-with-Yahei\ 13
   "set guifont=Consolas-with-Yahei\ 13
   "set guifont=Monospace\ 13
   "set guifont=Powerline\ Consolas\ 13
-  set guifont=Consolas-with-Yahei\ 13
 endif
 
 "no gui scroll bar

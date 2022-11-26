@@ -23,7 +23,7 @@
 call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"Plug 'tpope/vim-capslock'
+Plug 'tpope/vim-capslock'
 Plug 'altercation/vim-colors-solarized'
 Plug 'vhda/verilog_systemverilog.vim'
 Plug 'Yggdroot/LeaderF'
